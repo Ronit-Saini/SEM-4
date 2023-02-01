@@ -1,0 +1,12 @@
+ARM Linker, 5.03 [Build 76] [MDK-ARM Lite]
+
+==============================================================================
+
+Section Cross References
+
+    w1q1.o(RESET) refers to w1q1.o(mycode) for Reset_Handler
+    w1q1.o(RESET) refers to w1q2.o(mycode) for Reset_Handler
+    w1q2.o(RESET) refers to w1q1.o(mycode) for Reset_Handler
+    w1q2.o(RESET) refers to w1q2.o(mycode) for Reset_Handler
+    w1q2.o(mycode) refers to w1q2.o(mydata) for DST
+
