@@ -1,0 +1,57 @@
+create table employee(EmpNO number(5),EmpName varchar(20),Gender varchar(1), Salary number(10),EmpAdd varchar(20), DNo number(10));
+alter table employee add Primary Key(EmpNo);
+alter table employee modify EmpName varchar(20) NOT NULL;
+alter table employee modify Gender varchar(1) NOT NULL;
+alter table employee modify Salary number(6) NOT NULL;
+alter table employee modify EmpAdd varchar(10) NOT NULL;
+alter table employee add constraint gender_check check(gender in ('M','F'));
+
+
+create table Department(DeptNo number(10), DeptName varchar(10),Location varchar(10));
+alter table department add Primary Key(DeptNo);
+alter table department modify DeptName varchar(10) unique NOT NULL;
+
+
+alter table employee add FK_DNo foreign key (DNo) references Department(DeptNo);
+
+
+insert into employee values(001,'Ronit','M',1000,'MANIPAL',1);
+insert into employee values(002,'Ashu','M',2000,'PUNE',2);
+insert into department values(1,'cse','manipal');
+insert into department values(2,'eee','manipal');
+
+
+insert into employee values(1,'baba','M',100,'jaju',1);
+insert into employee values(1,'baba','M',100,'jaju',1)
+*
+ERROR at line 1:
+ORA-00001: unique constraint (DBL51.SYS_C00183731) violated
+
+
+
+insert into employee values(003,'Ronit','M',1000,'MANIPAL',1);
+1 row created.
+SQL> delete from department where DeptNo=1;
+delete from department where DeptNo=1
+*
+ERROR at line 1:
+ORA-02292: integrity constraint (DBL51.SYS_C00183763) violated - child record
+found
+
+
+alter table employee drop constraint FK_DNo;
+alter table employee add constraint FK_DNo foreign key(DNo) references Department(DeptNo) on delete cascade;
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,198 @@
+University Database Schema:
+Student (ID, name,dept-name, tot-cred)
+Instructor(ID, name, dept-name, salary)
+Course (Course-id, title,dept-name, credits)
+Takes (ID, course-id, sec-id, semester, year, grade)
+Classroom (building, room-number, capacity)
+Department (dept-name, building, budget)
+Section (course-id, section-id, semester, year, building, room-number, time-slot-id)
+Teaches (id, course-id, section-id, semester, year)
+Advisor(s-id, i-id)
+Time-slot (time-slot-id, day, start-time, end-time)
+Prereq (course-id, prereq-id)
+
+
+
+
+1. SELECT course_id FROM section WHERE semester = 'Fall' AND year = 2009 
+UNION ALL SELECT course_id FROM section WHERE semester = 'Spring' and year = 2010;
+
+COURSE_I
+--------
+CS-101
+CS-347
+PHY-101
+CS-101
+CS-315
+CS-319
+CS-319
+FIN-201
+HIS-351
+MU-199
+
+
+
+2. SELECT course_id FROM section WHERE semester = 'Fall' AND year = 2009 
+INTERSECT SELECT course_id FROM section WHERE semester = 'Spring' and year = 2010;
+
+COURSE_I
+--------
+CS-101
+
+
+
+3. SELECT course_id FROM section WHERE semester = 'Fall' AND year = 2009 
+MINUS SELECT course_id FROM section WHERE semester = 'Spring' and year = 2010
+
+COURSE_I
+--------
+CS-347
+PHY-101
+
+
+
+4. SELECT course.course_id FROM course WHERE course.course_id NOT IN (SELECT takes.course_id FROM takes)
+
+COURSE_I
+--------
+BIO-399
+
+
+
+5. SELECT s1.course_id FROM section s1 WHERE semester = 'Fall' AND year = 2009 AND s1.course_id IN (SELECT s2.course_id FROM section s2 WHERE semester = 'Spring' and year = 2010 );
+
+COURSE_I
+--------
+CS-101
+
+
+
+6.  SELECT COUNT(UNIQUE takes.id) FROM takes WHERE takes.course_id IN (SELECT teaches.course_id FROM teaches WHERE teaches.ID = '10101')
+
+COUNT(UNIQUETAKES.ID)
+--------------------- 
+                    6
+
+
+
+7. select course_id from section where semester='Fall' and year=2009 and course_id NOT IN(select course_id from section where semester='Spring' and year=2010);
+
+COURSE_I
+--------
+CS-347
+PHY-101
+
+
+
+8. SELECT UNIQUE student.name FROM student WHERE student.name IN (SELECT instructor.name FROM instructor)
+
+NAME
+--------------------
+Brandt
+
+
+
+9. SELECT i1.name FROM instructor i1 WHERE i1.salary > SOME(SELECT i2.salary FROM instructor i2 WHERE i2.dept_name = 'Biology')
+NAME
+--------------------
+Einstein
+Brandt
+Wu
+Gold
+Kim
+Singh
+Katz
+
+
+
+
+10. SELECT i1.name FROM instructor i1 WHERE i1.salary > ALL(SELECT i2.salary FROM instructor i2 WHERE i2.dept_name = 'Biology' );
+
+NAME
+--------------------
+Katz
+Singh
+Kim
+Gold
+Wu
+Brandt
+Einstein
+
+
+
+
+11.  SELECT dept_name FROM(SELECT dept_name, avg(salary) avgsal FROM instructor GROUP BY dept_name) WHERE avgsal = (SELECT MAX(avgsal) FROM (SELECT dept_name, AVG(salary) avgsal FROM instructor GROUP BY dept_name));
+
+DEPT_NAME
+--------------------
+Physics
+
+
+
+12.  SELECT department.dept_name FROM department WHERE department.budget < (SELECT avg(salary) avgsal FROM instructor);
+
+DEPT_NAME
+--------------------
+History
+Physics
+
+
+
+13.  SELECT course_id FROM section s1 WHERE semester = 'Fall' AND year = 2009 AND EXISTS(SELECT course_id FROM section s2 WHERE semester = 'Spring' and year = 2010 and s1.course_id=s2.course_id);
+
+COURSE_I
+--------
+CS-101
+CS-347
+PHY-101
+
+
+
+14.  DARKLORD SE DEKHLIYO
+
+
+
+15. SELECT course_id from (SELECT course_id, count (*) count FROM section WHERE section.year=2009 group by course_id) WHERE count=1;
+
+COURSE_I
+--------
+BIO-101
+CS-101
+CS-347
+EE-181
+PHY-101
+
+
+
+16. SELECT name,id FROM (select id,count(*) count FROM takes WHERE takes.course_id like 'CS%' group by id) WHERE count>=2;
+
+ID
+-----
+00128
+12345
+45678
+54321
+76543
+98765
+
+
+
+17. SELECT dept_name, avg_salary FROM (SELECT dept_name, AVG(salary) avg_salary FROM instructor GROUP BY dept_name) WHERE avg_salary > 42000;
+
+DEPT_NAME            AVG_SALARY
+-------------------- ----------
+Elec. Eng.                80000
+Physics                   91000
+Comp. Sci.           77333.3333
+Finance                   85000
+Biology                   72000
+History                   61000
+
+
+
+
+18. CREATE VIEW all_courses as SELECT section.course_id, building, room_number FROM section, course WHERE semester = 'Fall' AND year = 2009 AND section.course_id = course.course_id AND dept_name = 'Physics';
+
+19. SELECT course_id FROM all_courses;
+
+20. CREATE VIEW department_total_salary as SELECT dept_name, SUM(salary) sum_sal FROM instructor GROUP BY dept_name;

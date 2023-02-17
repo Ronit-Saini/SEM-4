@@ -1,0 +1,144 @@
+SQL> rename employee to employeefake;
+SQL> rename department to departmentfake;
+
+SQL> @ "C:\Users\Student\Desktop\210905322-DBS\WEEK-2\University.sql"
+SQL> @ "C:\Users\Student\Desktop\210905322-DBS\WEEK-2\smallRelations.sql"
+
+questions start : 
+
+9. SQL> select name,dept_name from student ;
+NAME                 DEPT_NAME
+-------------------- --------------------
+Zhang                Comp. Sci.
+Shankar              Comp. Sci.
+Brandt               History
+Chavez               Finance
+Peltier              Physics
+Levy                 Physics
+Williams             Comp. Sci.
+Sanchez              Music
+Snow                 Physics
+Brown                Comp. Sci.
+Aoi                  Elec. Eng.
+
+NAME                 DEPT_NAME
+-------------------- --------------------
+Bourikas             Elec. Eng.
+Tanaka               Biology
+
+
+
+10. SQL> select * from instructor where dept_name='Comp. Sci.';
+
+ID    NAME                 DEPT_NAME                SALARY
+----- -------------------- -------------------- ----------
+10101 Srinivasan           Comp. Sci.                65000
+45565 Katz                 Comp. Sci.                75000
+83821 Brandt               Comp. Sci.                92000
+
+
+
+11.  select * from course where dept_name='Comp. Sci.' and credits=3;
+
+COURSE_I TITLE                                              DEPT_NAME
+-------- -------------------------------------------------- --------------------
+   CREDITS
+----------
+CS-315   Robotics                                           Comp. Sci.
+         3
+
+CS-319   Image Processing                                   Comp. Sci.
+         3
+
+CS-347   Database System Concepts                           Comp. Sci.
+         3
+
+
+
+12. SQL> select course_id,title from student natural join course where ID=12345;
+
+COURSE_I TITLE
+-------- --------------------------------------------------
+CS-101   Intro. to Computer Science
+CS-190   Game Design
+CS-315   Robotics
+CS-319   Image Processing
+CS-347   Database System Concepts
+
+
+13. SQL> select * from instructor where salary>40000 and salary<90000;
+
+ID    NAME                 DEPT_NAME                SALARY
+----- -------------------- -------------------- ----------
+10101 Srinivasan           Comp. Sci.                65000
+32343 El Said              History                   60000
+33456 Gold                 Physics                   87000
+45565 Katz                 Comp. Sci.                75000
+58583 Califieri            History                   62000
+76543 Singh                Finance                   80000
+76766 Crick                Biology                   72000
+98345 Kim                  Elec. Eng.                80000
+
+8 rows selected.
+
+
+14 15 16 17 left
+
+
+18. SQL> select name from instructor where lower(name) like '%ch%';
+
+no rows selected
+
+
+19.  SQL> 
+
+
+NAME                 LENGTH(NAME)
+-------------------- ------------
+Zhang                           5
+Shankar                         7
+Brandt                          6
+Chavez                          6
+Peltier                         7
+Levy                            4
+Williams                        8
+Sanchez                         7
+Snow                            4
+Brown                           5
+Aoi                             3
+
+NAME                 LENGTH(NAME)
+-------------------- ------------
+Bourikas                        8
+Tanaka                          6
+
+13 rows selected.
+
+
+21. SQL> select name,upper(name) from instructor;
+
+NAME                 UPPER(NAME)
+-------------------- --------------------
+Srinivasan           SRINIVASAN
+Wu                   WU
+Mozart               MOZART
+Einstein             EINSTEIN
+El Said              EL SAID
+Gold                 GOLD
+Katz                 KATZ
+Califieri            CALIFIERI
+Singh                SINGH
+Crick                CRICK
+Brandt               BRANDT
+
+NAME                 UPPER(NAME)
+-------------------- --------------------
+Kim                  KIM
+
+12 rows selected.
+
+
+
+
+
+
