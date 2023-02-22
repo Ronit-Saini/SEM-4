@@ -406,9 +406,9 @@
           <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
-              <FileName>SAMPLE.s</FileName>
+              <FileName>q4.s</FileName>
               <FileType>2</FileType>
-              <FilePath>.\QUES1\SAMPLE.s</FilePath>
+              <FilePath>..\LAB-1\QUES-4\q4.s</FilePath>
             </File>
           </Files>
         </Group>

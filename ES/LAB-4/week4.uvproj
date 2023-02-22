@@ -45,7 +45,7 @@
             <InvalidFlash>1</InvalidFlash>
           </TargetStatus>
           <OutputDirectory>.\</OutputDirectory>
-          <OutputName>LAB2PROJECT</OutputName>
+          <OutputName>week4</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
           <CreateHexFile>0</CreateHexFile>
@@ -406,9 +406,9 @@
           <GroupName>Source Group 1</GroupName>
           <Files>
             <File>
-              <FileName>SAMPLE.s</FileName>
+              <FileName>W4Q1.s</FileName>
               <FileType>2</FileType>
-              <FilePath>.\QUES1\SAMPLE.s</FilePath>
+              <FilePath>.\Ques1\W4Q1.s</FilePath>
             </File>
           </Files>
         </Group>
