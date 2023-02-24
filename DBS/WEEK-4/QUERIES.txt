@@ -1,0 +1,247 @@
+University Database Schema:
+Student (ID, name,dept-name, tot-cred)
+Instructor(ID, name, dept-name, salary)
+Course (Course-id, title,dept-name, credits)
+Takes (ID, course-id, sec-id, semester, year, grade)
+Classroom (building, room-number, capacity)
+Department (dept-name, building, budget)
+Section (course-id, section-id, semester, year, building, room-number, time-slot-id)
+Teaches (id, course-id, section-id, semester, year)
+Advisor(s-id, i-id)
+Time-slot (time-slot-id, day, start-time, end-time)
+Prereq (course-id, prereq-id)
+
+
+1.  SELECT course_id,count(DISTINCT ID) FROM takes GROUP BY course_id;
+
+COURSE_I COUNT(DISTINCTID)
+-------- -----------------
+HIS-351                  1
+EE-181                   1
+CS-101                   6
+CS-347                   2
+
+FIN-201                  1
+CS-319                   2
+BIO-101                  1
+PHY-101                  1
+CS-315                   2
+CS-190                   2
+MU-199                   1
+
+COURSE_I COUNT(DISTINCTID)
+-------- -----------------
+BIO-301                  1
+
+
+
+2.  SELECT dept_name,count(DISTINCT ID) FROM (student NATURAL JOIN TAKES) GROUP BY dept_name HAVING COUNT(DISTINCT ID) > 10;
+
+no rows selected
+
+
+
+
+3.  SELECT dept_name,COUNT(distinct course_id) FROM course GROUP BY dept_name;
+
+DEPT_NAME            COUNT(DISTINCTCOURSE_ID)
+-------------------- ------------------------
+Elec. Eng.                                  1
+Physics                                     1
+Comp. Sci.                                  5
+Finance                                     1
+Biology                                     3
+History                                     1
+Music                                       1
+
+
+
+4.  SELECT dept_name,AVG(salary) FROM instructor GROUP BY dept_name HAVING AVG(salary) > 42000;
+
+DEPT_NAME            AVG(SALARY)
+-------------------- -----------
+Elec. Eng.                 80000
+Physics                    91000
+Comp. Sci.            77333.3333
+Finance                    85000
+Biology                    72000
+History                    61000
+
+
+
+5.   SELECT course_id,sec_id,COUNT(DISTINCT ID) FROM (TAKES NATURAL JOIN section) WHERE semester='Spring' AND year=2009 GROUP BY sec_id,course_id;
+
+COURSE_I SEC_ID   COUNT(DISTINCTID)
+-------- -------- -----------------
+EE-181   1                        1
+CS-190   2                        2
+
+
+
+
+
+
+6. SELECT course_id,prereq_id FROM prereq ORDER BY course_id;
+
+COURSE_I PREREQ_I
+-------- --------
+BIO-301  BIO-101
+BIO-399  BIO-101
+CS-190   CS-101
+CS-315   CS-101
+CS-319   CS-101
+CS-347   CS-101
+EE-181   PHY-101
+
+
+
+7.  select ID,name,dept_name,salary from instructor order by salary desc;
+
+ID    NAME                 DEPT_NAME                SALARY
+----- -------------------- -------------------- ----------
+22222 Einstein             Physics                   95000
+83821 Brandt               Comp. Sci.                92000
+12121 Wu                   Finance                   90000
+33456 Gold                 Physics                   87000
+98345 Kim                  Elec. Eng.                80000
+76543 Singh                Finance                   80000
+45565 Katz                 Comp. Sci.                75000
+76766 Crick                Biology                   72000
+10101 Srinivasan           Comp. Sci.                65000
+58583 Califieri            History                   62000
+32343 El Said              History                   60000
+
+ID    NAME                 DEPT_NAME                SALARY
+----- -------------------- -------------------- ----------
+15151 Mozart               Music                     40000
+
+
+
+
+
+
+8.  SELECT MAX(total_salary) FROM (SELECT SUM(salary) AS total_salary FROM instructor GROUP BY dept_name);
+
+MAX(TOTAL_SALARY)
+-----------------
+           232000
+
+
+
+9.  SELECT AVG(T) FROM (SELECT AVG(salary) AS T FROM instructor GROUP BY dept_name HAVING AVG(salary) > 42000);
+
+    AVG(T)
+----------
+77722.2222
+
+
+
+10.  SELECT MAX(total_student) FROM (SELECT COUNT(ID) AS total_student FROM TAKES GROUP BY sec_id, semester, year HAVING semester='Spring' and year=2010);
+
+MAX(TOTAL_STUDENT)
+------------------
+                 7
+
+
+
+11.   SELECT DISTINCT name FROM teaches, instructor WHERE teaches.id = instructor.id AND course_id IN (SELECT DISTINCT course_id FROM takes,student WHERE dept_name='Comp. Sci.' AND student.id = takes.id);
+
+NAME
+--------------------
+Srinivasan
+Brandt
+Katz
+
+
+
+12.   SELECT dept_name, AVG(salary) FROM instructor GROUP BY dept_name HAVING AVG(salary)>50000 AND COUNT(ID)>5;
+
+no rows selected
+
+
+
+
+
+13.  WITH temp AS (SELECT max(budget) AS temp FROM department) SELECT budget FROM department,temp WHERE temp = department.budget;
+
+    BUDGET
+----------
+    120000
+
+
+
+14.  with tot_sal(dept_name,totSal) as (select dept_name,sum(salary) from instructor group by dept_name),
+  2  avg_tot_sal(averageTotSal) as (select avg(totSal) from tot_sal)
+  3  select dept_name,totSal from tot_sal,avg_tot_sal where totSal > averageTotSal;
+
+DEPT_NAME                TOTSAL
+-------------------- ----------
+Physics                  182000
+Comp. Sci.               232000
+Finance                  170000
+
+
+
+15. WITH temp AS (SELECT max(count(id)) AS T FROM takes WHERE semester='Fall' and year=2009 group by sec_id) SELECT sec_id FROM temp,takes WHERE semester='Fall' and year=2009 group by sec_id,temp.T having count(id) = temp.T;
+
+SEC_ID
+--------
+1
+
+
+
+16.  WITH temp AS (SELECT sum(tot_cred) AS T FROM student WHERE dept_name='Finance') SELECT dept_name FROM student,temp group by dept_name,temp.T having sum(tot_cred) > temp.T;
+
+DEPT_NAME
+--------------------
+Comp. Sci.
+Elec. Eng.
+Biology
+
+
+
+
+
+
+17.   delete from instructor where dept_name='Finance';
+
+2 rows deleted.
+
+ rollback;
+
+Rollback complete.
+
+commit ;
+
+Commit complete.
+
+
+
+18.   delete from course where course_id like '%CS%';
+
+5 rows deleted.
+
+rollback;
+
+Rollback complete.
+
+
+
+
+
+
+
+
+
+
+
+
+
+22.   delete from instructor where salary<(select avg(salary) from instructor);
+
+5 rows deleted.
+
+
+
+
+
