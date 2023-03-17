@@ -1,0 +1,4 @@
+1. select Bdate,address from employee where Fname='John' and Minit='B' and Lname='Smith';
+SELECT Fname,Lname,Address from employee natural join department where Dname='Research';
+
+2. select Pname,Dname,where Dlocation = 'Stanford'
