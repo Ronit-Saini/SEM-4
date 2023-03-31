@@ -227,12 +227,13 @@ Rollback complete.
 
 
 
+ 
+20. Update instructor set salary=salary*1.03 where salary>100000;
+Update instructor set salary=salary*1.05 where salary<=100000;
 
 
-
-
-
-
+ 
+21. Insert into student Select ID,name,dept_name,0 from instructor;
 
 
 
@@ -243,5 +244,8 @@ Rollback complete.
 
 
 
+19. Update student 
+    set dept_name ='IT';
+    Where dept_name = 'Comp. Sci';
 
 
