@@ -35,8 +35,8 @@ void main() {
     root->right->right = createNode(7);
     root->left->right->right = createNode(8);
     root->right->right->right = createNode(9);
-    root->right->right->right->left = createNode(10);
-    root->right->right->right->left->right = createNode(13);
+   // root->right->right->right->left = createNode(10);
+    //root->right->right->right->left->right = createNode(13);
     int count = 0;
     postOrder(root,&count);
     printf("Number of nodes in graph are %d\n",count);
