@@ -75,3 +75,44 @@ void main()
 		}
 	}
 }
+
+/*
+Enter: 
+1 to Insert
+2 to Exit and Find Balance Factor of Each Node
+Enter Choice :
+1
+Enter the Node (Do NOT Enter Duplicates!) : 
+3
+Enter: 
+1 to Insert
+2 to Exit and Find Balance Factor of Each Node
+Enter Choice :
+1
+Enter the Node (Do NOT Enter Duplicates!) : 
+8
+Enter: 
+1 to Insert
+2 to Exit and Find Balance Factor of Each Node
+Enter Choice :
+1
+Enter the Node (Do NOT Enter Duplicates!) : 
+2
+Enter: 
+1 to Insert
+2 to Exit and Find Balance Factor of Each Node
+Enter Choice :
+1
+Enter the Node (Do NOT Enter Duplicates!) : 
+9
+Enter: 
+1 to Insert
+2 to Exit and Find Balance Factor of Each Node
+Enter Choice :
+2
+Printing Balance Factors....
+Balance Factor for 2 is : 0
+Balance Factor for 3 is : -1
+Balance Factor for 8 is : -1
+Balance Factor for 9 is : 0
+*/
