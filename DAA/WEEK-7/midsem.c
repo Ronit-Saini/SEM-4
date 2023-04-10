@@ -18,15 +18,57 @@ int duplicate(int a[MAX], int ub)
     return 0;
 }
 
+/*if(duplicate(a,ub)!=0)
+        {
+            printf("blashh");
+            for(i=0;i<ub;i++)
+            {
+                printf("%d ",a[i]);
+            }
+        }*/
+
 void merge(int a[MAX], int lb, int mid, int ub)
 {
-    int i = 0;
-    if (duplicate(a, mid) != 0)
+    int i, j, k, b[100];
+    i = k = lb;
+    j = mid + 1;
+
+    while (i <= mid && j <= ub)
     {
-        for (i = lb; i < ub; i++)
+        if (a[i] <= a[j])
         {
-            printf("%d ", a[i]);
+            b[k] = a[i];
+            i++;
         }
+        else
+        {
+            b[k] = a[j];
+            j++;
+        }
+        k++;
+    }
+    if (i > mid)
+    {
+        while (j <= ub)
+        {
+            b[k] = a[j];
+            j++;
+            k++;
+        }
+    }
+    else
+    {
+        while (i <= mid)
+        {
+            b[k] = a[i];
+            k++;
+            i++;
+        }
+    }
+    for (i = 0; i <= ub; i++)
+    {
+        a[i] = b[i];
+        printf("\n::: %d", a[i]);
     }
 }
 
