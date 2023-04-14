@@ -1,3 +1,4 @@
+
 set serverout on
 declare
 assigned_money department.budget%TYPE;
@@ -13,3 +14,4 @@ begin
     commit;
 end;
 /
+select name,salary,dept_name from instructor;
